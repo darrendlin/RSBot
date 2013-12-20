@@ -53,11 +53,11 @@ public enum Mine
 			return false; // lv 60 mining
 		}}, false);
 	
-	public final String name;
+	private final String name;
 	
-	public final Condition condition; // true or false before user's allowed to select it
+	private final Condition condition; // true or false before user's allowed to select it
 	
-	public final boolean isMember;
+	private final boolean isMember;
 	
 	Mine(String name, Condition condition, boolean isMember)
 	{
