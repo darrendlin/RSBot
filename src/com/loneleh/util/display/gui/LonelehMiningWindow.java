@@ -177,7 +177,6 @@ public class LonelehMiningWindow extends JFrame
 		priorityList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		oresPanel = new ListenableOresPanel(priorityList);
-		
 		for (MineralType t : MineralType.values())
 			if (!t.isGem())
 				oresPanel.add(new JCheckBox(t.getName()));

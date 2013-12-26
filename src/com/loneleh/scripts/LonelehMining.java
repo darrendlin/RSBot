@@ -10,6 +10,7 @@ import org.powerbot.event.PaintListener;
 import org.powerbot.script.Manifest;
 import org.powerbot.script.PollingScript;
 import org.powerbot.script.methods.Environment;
+import org.powerbot.script.methods.MethodContext;
 import org.powerbot.script.util.Random;
 
 import com.loneleh.scripts.framework.LonelehContext;
@@ -68,7 +69,14 @@ public class LonelehMining extends PollingScript implements MessageListener, Pai
 	public void stop()
 	{
 		log.info("Thanks for using " + getName() + "; hope to see you again - run time: " + Time.format(getRuntime()));
+		super.stop();
+	    ctx.shutdownExecutor();
 	}
+	
+	@Override
+    public void setContext(MethodContext mc) {
+        this.ctx.init(mc);
+    }
 	
 	@Override
 	public int poll()

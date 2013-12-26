@@ -1,6 +1,5 @@
-package com.loneleh.scripts.framework.node;
+package com.loneleh.scripts.framework.concurrency;
 
-import com.loneleh.scripts.framework.Contextable;
 import com.loneleh.scripts.framework.LonelehContext;
 
 public abstract class Task extends Contextable implements Runnable
