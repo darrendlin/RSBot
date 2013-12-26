@@ -12,12 +12,12 @@ import org.powerbot.script.PollingScript;
 import org.powerbot.script.methods.Environment;
 import org.powerbot.script.util.Random;
 
-import com.loneleh.scripts.display.gui.LonelehMiningWindow;
 import com.loneleh.scripts.framework.LonelehContext;
 import com.loneleh.util.Time;
+import com.loneleh.util.display.gui.LonelehMiningWindow;
 
 
-@Manifest(name = "LonelehMining", version = 3.0, description = "Mines the stuff you want ;)", topic = 0, hidden = true)
+@Manifest(name = "LonelehMining", version = 3.0, description = "Mines the stuff you want ;) - start after you've logged in", topic = 0, hidden = true)
 
 public class LonelehMining extends PollingScript implements MessageListener, PaintListener
 {
@@ -42,9 +42,9 @@ public class LonelehMining extends PollingScript implements MessageListener, Pai
 					log.info("Loading window...");
 					window = new LonelehMiningWindow(LonelehMining.this);
 					window.setVisible(true);
+					log.info("Window loaded!");
 					
-				}
-				catch (Exception e) {
+				} catch (Exception e) {
 					log.severe("Failed to load window!");
 					e.printStackTrace();
 				}

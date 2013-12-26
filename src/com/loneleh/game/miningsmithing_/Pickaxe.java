@@ -1,5 +1,5 @@
-package com.loneleh.scripts.framework.enums;
-
+package com.loneleh.game.miningsmithing_;
+@Deprecated
 public enum Pickaxe
 {
 	DWARVEN_ARMY_AXE("Dwarven army axe", 1, 1, false),

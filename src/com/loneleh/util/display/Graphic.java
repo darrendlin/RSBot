@@ -1,4 +1,4 @@
-package com.loneleh.scripts.display;
+package com.loneleh.util.display;
 
 import java.awt.Graphics;
 
