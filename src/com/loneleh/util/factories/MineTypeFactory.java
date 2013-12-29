@@ -4,11 +4,13 @@
 package com.loneleh.util.factories;
 
 import java.util.Hashtable;
+import java.util.logging.Logger;
 
 import com.loneleh.game.mining.MineType;
+import com.loneleh.script.LonelehMining;
 
 /**
- * MineFactory.java
+ * MineTypeFactory.java
  * 
  * @author Loneleh
  */
@@ -16,26 +18,27 @@ public class MineTypeFactory
 {
 	private static Hashtable<String, MineType> mineTable;
 	
+	
 	static
 	{
 		mineTable = new Hashtable<String, MineType>();
-		
+
 		for (MineType t : MineType.values())
 			mineTable.put(t.getName(), t);
 	}
-	
+
 	/**
-	 * Creates a new <code>Mineral</code> object.
-	 * @param type String representation of the Mineral object to be created, as specified by <code>MineralType</code>.
-	 * @return the new <code>Mineral</code> object.
+	 * Returns a <code>MineType</code> enum value.
+	 * @param type String representation of the MineType object to be created, as specified by <code>MineType</code>.
+	 * @return the <code>MineType</code> enum value.
 	 */
 	public static MineType getMine(String type)
 	{
 		if (mineTable.containsKey(type)) {
 			return mineTable.get(type);
 		} else {
-			//TODO some sort of error reporting... which shouldn't even happen
+			Logger.getLogger(LonelehMining.class.getName()).severe("Invalid MineType type: " + type);
 		}
-		return null;
+		return MineType.values()[0];
 	}
 }

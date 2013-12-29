@@ -1,8 +1,8 @@
-package com.loneleh.scripts.framework.concurrency;
+package com.loneleh.script.framework;
 
 import org.powerbot.script.methods.MethodProvider;
 
-import com.loneleh.scripts.framework.LonelehContext;
+import com.loneleh.script.LonelehMining;
 
 /**
  * Contextable.java
@@ -12,9 +12,9 @@ import com.loneleh.scripts.framework.LonelehContext;
  */
 public class Contextable extends MethodProvider
 {
-	protected final LonelehContext ctx;
+	protected LonelehContext ctx;
 	
-	public Contextable(final LonelehContext ctx)
+	public Contextable(LonelehContext ctx)
 	{
 		super(ctx);
 		this.ctx = ctx;

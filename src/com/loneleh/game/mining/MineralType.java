@@ -3,6 +3,7 @@
  */
 package com.loneleh.game.mining;
 
+
 /**
  * MineralType.java
  * 
@@ -29,6 +30,8 @@ public enum MineralType
 	private final String name;
 	private final double exp;
 	private final boolean isGem;
+	
+	private int priority;
 	
 	
 	private MineralType(int id, String name, double exp, boolean isGem) {
@@ -59,6 +62,14 @@ public enum MineralType
 	
 	public boolean isGem() {
 		return isGem;
+	}
+	
+	public void setPriority(int priority) {
+		this.priority = priority;
+	}
+	
+	public int getPriority() {
+		return priority;
 	}
 	
 }

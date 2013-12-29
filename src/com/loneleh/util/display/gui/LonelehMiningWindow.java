@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.Vector;
 
 import javax.swing.AbstractButton;
@@ -21,6 +23,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -32,7 +35,8 @@ import org.eclipse.wb.swing.FocusTraversalOnArray;
 import com.loneleh.game.mining.MineType;
 import com.loneleh.game.mining.MineralType;
 import com.loneleh.game.mining.RockType;
-import com.loneleh.scripts.LonelehMining;
+import com.loneleh.script.LonelehMining;
+import com.loneleh.script.framework.LonelehContext;
 import com.loneleh.util.factories.MineTypeFactory;
 
 /**
@@ -44,6 +48,9 @@ import com.loneleh.util.factories.MineTypeFactory;
 public class LonelehMiningWindow extends JFrame
 {
 	private final LonelehMining lm;
+	@SuppressWarnings("unused")
+	private final LonelehContext ctx;
+	
 	private JPanel objectivePanel;
 	private JLabel lblMiningObjective;
 	private JPanel objectivePanelInner;
@@ -65,10 +72,10 @@ public class LonelehMiningWindow extends JFrame
 	/**
 	 * Create the application.
 	 */
-	public LonelehMiningWindow(final LonelehMining lm)
-	{
+	public LonelehMiningWindow(final LonelehMining lm, final LonelehContext ctx) {
 		setResizable(false);
 		this.lm = lm;
+		this.ctx = ctx;
 		
 		initialize();
 	}
@@ -77,8 +84,7 @@ public class LonelehMiningWindow extends JFrame
 	 * Initialize the contents of the frame.
 	 */
 	@SuppressWarnings("deprecation")
-	private void initialize()
-	{
+	private void initialize() {
 		setBounds(100, 100, 425, 380);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
@@ -117,11 +123,13 @@ public class LonelehMiningWindow extends JFrame
 		objectivePanel.add(objectivePanelInner);
 		
 		rdbtnExperience = new JRadioButton("Experience");
+		rdbtnExperience.setActionCommand("Experience");
 		rdbtnExperience.setSelected(true);
 		objectivePanelInner.add(rdbtnExperience);
 		rdbtnExperience.setToolTipText("Power mining");
 		
 		rdbtnProfit = new JRadioButton("Profit");
+		rdbtnProfit.setActionCommand("Profit");
 		objectivePanelInner.add(rdbtnProfit);
 		rdbtnProfit.setToolTipText("Banking");
 		
@@ -142,18 +150,20 @@ public class LonelehMiningWindow extends JFrame
 		locationPanel.add(localtionPanelInner);
 		
 		comboBoxMines = new JComboBox<String>();
-		comboBoxMines.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				MineType m = MineTypeFactory.getMine(comboBoxMines.getSelectedItem().toString());
-				
-				for (Component c : oresPanel.getComponents()) {
-					boolean contains = false;
-					for (RockType t : m.getRocks()) {
-						if (((AbstractButton)c).getText().equalsIgnoreCase(t.getMineral().getName())) {
-							contains = true;
+		comboBoxMines.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					MineType m = MineTypeFactory.getMine(comboBoxMines.getSelectedItem().toString());
+					
+					for (Component c : oresPanel.getComponents()) {
+						boolean contains = false;
+						for (RockType t : m.getRocks()) {
+							if (((AbstractButton)c).getText().equalsIgnoreCase(t.getMineral().getName())) {
+								contains = true;
+							}
 						}
+						c.setEnabled(contains);
 					}
-					c.setEnabled(contains);
 				}
 			}
 		});
@@ -161,11 +171,9 @@ public class LonelehMiningWindow extends JFrame
 		Vector<String> comboBoxItems = new Vector<String>();
 		for (MineType m : MineType.values())
 			if (m.isVisible())
-				if (m.isMember())
-					comboBoxItems.add(m.getName() + " (m)");
-				else
-					comboBoxItems.add(m.getName());
+				comboBoxItems.add(m.getName());
 		comboBoxMines.setModel(new DefaultComboBoxModel<String>(comboBoxItems));
+		comboBoxMines.setSelectedIndex(-1);
 		
 		priorityScrollPane = new JScrollPane();
 		priorityScrollPane.setBounds(233, 117, 170, 177);
@@ -192,16 +200,23 @@ public class LonelehMiningWindow extends JFrame
 		btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
+				btnStart.setEnabled(false);
+				btnStart.setText("Starting...");
 				lm.log.info("Loading settings...");
-				//TODO start code
+				ListModel<String> model = priorityList.getModel();
+				String[] ores = new String[model.getSize()];
+				for (int i = 0 ; i < model.getSize() ; i++) {
+				     ores[i] = model.getElementAt(i);  
+				}
+				lm.beginScript(group.getSelection().getActionCommand(), comboBoxMines.getSelectedItem().toString(), ores);
 			}
 		});
 		btnStart.setToolTipText("Start to begin mining.");
 		btnStart.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnStart.setBounds(165, 303, 89, 35);
+		btnStart.setBounds(149, 303, 120, 35);
 		getContentPane().add(btnStart);
 		
-		lblLastUpdated = new JLabel("December 25, 2013");
+		lblLastUpdated = new JLabel("December 29, 2013");
 		lblLastUpdated.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblLastUpdated.setBounds(254, 337, 162, 14);
 		getContentPane().add(lblLastUpdated);

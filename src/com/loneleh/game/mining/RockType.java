@@ -3,6 +3,7 @@
  */
 package com.loneleh.game.mining;
 
+
 /**
  * Rock.java
  * 
@@ -31,7 +32,6 @@ public enum RockType
 		this.name = name;
 		this.mineral = type;
 	}
-
 
 	/**
 	 * @return the name

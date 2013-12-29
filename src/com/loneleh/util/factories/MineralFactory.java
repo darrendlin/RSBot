@@ -4,11 +4,13 @@
 package com.loneleh.util.factories;
 
 import java.util.Hashtable;
+import java.util.logging.Logger;
 
 import com.loneleh.game.mining.Gem;
 import com.loneleh.game.mining.MineralType;
 import com.loneleh.game.mining.Ore;
 import com.loneleh.game.mining.abstracted.Minable;
+import com.loneleh.script.LonelehMining;
 
 /**
  * MineralFactory.java
@@ -44,8 +46,8 @@ public class MineralFactory
 		} else if (gemTable.containsKey(type)) {
 			return new Gem(gemTable.get(type));
 		} else {
-			//TODO some sort of error reporting... which shouldn't even happen
+			Logger.getLogger(LonelehMining.class.getName()).severe("Invalid MineralType type: " + type);
 		}
-		return null;
+		return new Ore(MineralType.values()[0]);
 	}
 }

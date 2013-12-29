@@ -1,8 +1,8 @@
 package com.loneleh.util.display.gui;
 
 import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.AbstractButton;
 import javax.swing.DefaultListModel;
@@ -22,16 +22,21 @@ public class ListenableOresPanel extends JPanel
 	public Component add(final Component b)
 	{
 		final AbstractButton button = (AbstractButton)b;
-		button.addActionListener(new ActionListener() {
+		button.addItemListener(new ItemListener() {
+
 			@Override
-			public void actionPerformed(ActionEvent e)
-			{
+			public void itemStateChanged(ItemEvent e) {
 				// add or remove from priority list
 				DefaultListModel<String> lm = (DefaultListModel<String>)priorityList.getModel();
-				if (button.isSelected()) lm.addElement(button.getText());
-				else lm.removeElement(button.getText());
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					lm.addElement(button.getText());
+				} else if (e.getStateChange() == ItemEvent.DESELECTED) {
+					lm.removeElement(button.getText());
+				}
 				priorityList.setModel(lm);
 			}});
+		button.setEnabled(false);
 		return super.add(b);
 	}
+
 }

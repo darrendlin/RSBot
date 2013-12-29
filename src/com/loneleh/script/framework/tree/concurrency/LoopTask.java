@@ -1,19 +1,31 @@
-package com.loneleh.scripts.framework.concurrency;
+package com.loneleh.script.framework.tree.concurrency;
 
-import com.loneleh.scripts.framework.LonelehContext;
+import com.loneleh.script.LonelehMining;
+import com.loneleh.script.framework.LonelehContext;
 
-
+/**
+ * LoopTask.java
+ * A LoopTask is a Task that runs in a loop.
+ * 
+ * @see Task
+ * @see Node
+ * @author Loneleh
+ */
 public abstract class LoopTask extends Task
 {
 	private boolean running;
 	
-	public LoopTask(final LonelehContext ctx)
+	public LoopTask(final LonelehContext ctx, final LonelehMining lm)
 	{
-		super(ctx);
+		super(ctx, lm);
 		this.running = true;
 	}
 	
-	public abstract int loop();
+	public int loop() {
+		if (validate())
+			execute();
+		return delay();
+	}
 	
 	@Override
     public void run() {

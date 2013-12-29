@@ -3,6 +3,8 @@
  */
 package com.loneleh.game.mining.abstracted;
 
+import java.util.Comparator;
+
 import org.powerbot.script.util.GeItem;
 import org.powerbot.script.util.GeItem.PriceType;
 
@@ -21,10 +23,14 @@ public abstract class Minable implements Valuable
 	protected int price;
 	protected double exp;
 	
+	private final MineralType mineralType;
+	
+	
 	public Minable(MineralType type) {
 		this.id = type.getId();
 		initGeItem();
 		this.exp = type.getExp();
+		this.mineralType = type;
 	}
 	
 	public double getExp() {
@@ -53,5 +59,18 @@ public abstract class Minable implements Valuable
 		return id;
 	}
 	
+	/**
+	 * Sets the priority of the associated MineralType, rather than setting its own priority
+	 * @param priority
+	 */
+	public void setPriority(int priority) {
+		mineralType.setPriority(priority);
+	}
+	
+	public MineralType getMineralType() {
+		return mineralType;
+	}
+	
 	public abstract boolean isGem();
+	
 }

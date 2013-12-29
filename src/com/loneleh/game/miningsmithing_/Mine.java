@@ -1,7 +1,7 @@
 package com.loneleh.game.miningsmithing_;
 
 import com.loneleh.util.display.Displayable;
-import com.loneleh.util.helper.Condition;
+import com.loneleh.util.helper.Conditional;
 
 
 /**
@@ -20,7 +20,7 @@ public enum Mine implements Displayable
 									   Rock.GOLD, 
 									   Rock.MITHRIL, 
 									   Rock.ADAMANTITE}, 
-			  new Condition() {
+			  new Conditional() {
 		@Override
 		public boolean validate()
 		{
@@ -28,7 +28,7 @@ public enum Mine implements Displayable
 		}}, false),
 	BARBARIAN_VILLAGE("Barbarian Village", new Rock[] {Rock.TIN,
 													   Rock.COAL}, 
-					  new Condition() {
+					  new Conditional() {
 		@Override
 		public boolean validate()
 		{
@@ -37,7 +37,7 @@ public enum Mine implements Displayable
 	CRAFTING_GUILD("Crafting Guild", new Rock[] {Rock.CLAY, 
 												 Rock.SILVER, 
 												 Rock.GOLD}, 
-				   new Condition() {
+				   new Conditional() {
 		@Override
 		public boolean validate()
 		{
@@ -51,7 +51,7 @@ public enum Mine implements Displayable
 											 Rock.GOLD, 
 											 Rock.MITHRIL, 
 											 Rock.ADAMANTITE}, 
-				  new Condition() {
+				  new Conditional() {
 		@Override
 		public boolean validate()
 		{
@@ -64,7 +64,7 @@ public enum Mine implements Displayable
 																 Rock.COAL, 
 																 Rock.MITHRIL, 
 																 Rock.ADAMANTITE}, 
-						   new Condition() {
+						   new Conditional() {
 		@Override
 		public boolean validate()
 		{
@@ -72,7 +72,7 @@ public enum Mine implements Displayable
 		}}, false),
 	LUMBRIDGE_SWAMP_EAST("Lumbridge Swamp (east)", new Rock[] {Rock.COPPER,
 															   Rock.TIN}, 
-						 new Condition() {
+						 new Conditional() {
 		@Override
 		public boolean validate()
 		{
@@ -81,7 +81,7 @@ public enum Mine implements Displayable
 	LUMBRIDGE_SWAMP_WEST("Lumbridge Swamp (west)", new Rock[] {Rock.COAL,
 															   Rock.MITHRIL,
 															   Rock.ADAMANTITE},
-						 new Condition() {
+						 new Conditional() {
 		@Override
 		public boolean validate()
 		{
@@ -89,7 +89,7 @@ public enum Mine implements Displayable
 		}}, false),
 	MINING_GUILD("Mining Guild", new Rock[] {Rock.COAL,
 											 Rock.MITHRIL}, 
-				 new Condition() {
+				 new Conditional() {
 		@Override
 		public boolean validate()
 		{
@@ -105,11 +105,11 @@ public enum Mine implements Displayable
 	 * {@link Condition#validate()} must return true before the user is allowed to select it.
 	 * This can include qualifications (levels, equipment) to enter a specific area, etc.
 	 */
-	private final Condition condition;
+	private final Conditional condition;
 	
 	private final boolean isMember;
 	
-	Mine(String name, Rock[] rocks, Condition condition, boolean isMember)
+	Mine(String name, Rock[] rocks, Conditional condition, boolean isMember)
 	{
 		this.name= name;
 		
